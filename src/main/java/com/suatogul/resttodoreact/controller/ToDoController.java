@@ -15,8 +15,9 @@ public class ToDoController {
     private IToDoService todoService;
 
     @GetMapping(value = "/todo")
-    public String getToDos(){
-        return "working get";
+    public List<ToDo> getToDos(){
+        List<ToDo> allTodos=todoService.getAllTodos();
+        return allTodos;
     }
     @PostMapping(value = "/todo")
     public List<ToDo> addToDo(@RequestBody ToDo newTodo){

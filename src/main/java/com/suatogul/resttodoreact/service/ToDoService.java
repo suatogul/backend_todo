@@ -17,7 +17,8 @@ public class ToDoService implements IToDoService {
 
     @Override
     public List<ToDo> getAllTodos() {
-        return null;
+
+        return todoList;
     }
 
     @Override
