@@ -25,9 +25,11 @@ public class ToDoController {
     return newToDo;
     }
 
-    @DeleteMapping(value = "/todo")
-    public String deleteToDo(){
-        return "working delete";
+    @DeleteMapping(value = "/todo/{id}")
+    public List<ToDo>  deleteToDo(@PathVariable String id){
+        String deletedId=id;
+        List<ToDo> deletedTodo=todoService.deleteTodo(deletedId);
+        return deletedTodo;
     }
 
 }

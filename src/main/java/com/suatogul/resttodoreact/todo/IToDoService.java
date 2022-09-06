@@ -6,7 +6,7 @@ public interface IToDoService {
 
     List<ToDo> getAllTodos();
     List<ToDo> addTodo(ToDo newItem);
-    List<ToDo> deleteTodo(String deleteId);
+    List<ToDo>  deleteTodo(String deleteId);
 
 
 }
