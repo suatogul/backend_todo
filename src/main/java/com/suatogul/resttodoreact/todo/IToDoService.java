@@ -4,8 +4,9 @@ import java.util.List;
 
 public interface IToDoService {
 
-    List<ToDo> findAll();
-    List<ToDo> deleteProduct(String deleteId);
+    List<ToDo> getAllTodos();
+    List<ToDo> addTodo(ToDo newItem);
+    List<ToDo> deleteTodo(String deleteId);
 
-    List<ToDo> addProduct(ToDo newItem);
+
 }

@@ -16,17 +16,20 @@ public class ToDoService implements IToDoService {
     ArrayList<ToDo> todoList=new ArrayList<ToDo>();
 
     @Override
-    public List<ToDo> findAll() {
+    public List<ToDo> getAllTodos() {
         return null;
     }
 
     @Override
-    public List<ToDo> deleteProduct(String deleteId) {
-        return null;
+    public List<ToDo> addTodo(ToDo newTodo) {
+    todoList.add(new ToDo(newTodo.getTodoName()));
+        return todoList;
     }
 
     @Override
-    public List<ToDo> addProduct(ToDo newItem) {
+    public List<ToDo> deleteTodo(String deleteId) {
         return null;
     }
+
+
 }
