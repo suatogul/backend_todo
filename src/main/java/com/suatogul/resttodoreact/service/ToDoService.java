@@ -17,7 +17,8 @@ public class ToDoService implements IToDoService {
 
     @Override
     public List<ToDo> getAllTodos() {
-        return null;
+
+        return todoList;
     }
 
     @Override
@@ -28,7 +29,19 @@ public class ToDoService implements IToDoService {
 
     @Override
     public List<ToDo> deleteTodo(String deleteId) {
-        return null;
+        ArrayList<ToDo> deletedItem=new ArrayList<ToDo>();
+        deletedItem.clear();
+        String testUuid="";
+            for(int i=0;i<todoList.size();i++){
+                    if(todoList.get(i).getUuid().toString().equals(deleteId)){
+                        deletedItem.add(todoList.get(i));
+                        todoList.clear();
+                        break;
+                    }
+
+            }
+//        String testUuid=todoList.get(0).getUuid().toString();
+        return deletedItem;
     }
 
 
