@@ -23,7 +23,9 @@ public class ToDoService implements IToDoService {
 
     @Override
     public List<ToDo> addTodo(ToDo newTodo) {
-    todoList.add(new ToDo(newTodo.getTodoName()));
+        if(newTodo.getTodoName().trim()!=""){
+            todoList.add(new ToDo(newTodo.getTodoName().trim()));
+        }
         return todoList;
     }
 
@@ -35,7 +37,7 @@ public class ToDoService implements IToDoService {
             for(int i=0;i<todoList.size();i++){
                     if(todoList.get(i).getUuid().toString().equals(deleteId)){
                         deletedItem.add(todoList.get(i));
-                        todoList.clear();
+                        todoList.remove(i);
                         break;
                     }
 

@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@RequestMapping
 public class ToDoController {
 
     @Autowired
     private IToDoService todoService;
+
 
     @GetMapping(value = "/todo")
     public List<ToDo> getToDos(){
