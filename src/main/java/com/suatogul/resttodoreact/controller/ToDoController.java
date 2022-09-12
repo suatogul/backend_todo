@@ -1,9 +1,7 @@
 package com.suatogul.resttodoreact.controller;
 
 import com.suatogul.resttodoreact.data.entity.Todo;
-import com.suatogul.resttodoreact.data.repository.ITodoRepository;
 import com.suatogul.resttodoreact.service.ToDoService;
-import com.suatogul.resttodoreact.todo.IToDoService;
 import com.suatogul.resttodoreact.todo.ToDo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,11 +17,18 @@ public class ToDoController {
     @Autowired
     ToDoService toDoService;
 
-
     @GetMapping(value = "/todo")
-    public List<ToDo> getToDos(){
-//        List<ToDo> allTodos=todoService.getAllTodos();
-        return null;
+    public ResponseEntity<List<Todo>> getAllTodos(){
+        try {
+            List<Todo> allTodos=toDoService.getAllTodos();
+            if(allTodos.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }else {
+                return new ResponseEntity<>(allTodos,HttpStatus.OK);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @PostMapping(value = "/todo")
     public ResponseEntity<Todo> createTodo(@RequestBody Todo todo){
@@ -36,10 +41,18 @@ public class ToDoController {
     }
 
     @DeleteMapping(value = "/todo/{id}")
-    public List<ToDo>  deleteToDo(@PathVariable String id){
-        String deletedId=id;
-//        List<ToDo> deletedTodo=todoService.deleteTodo(deletedId);
-        return null;
+    public ResponseEntity<Todo>  deleteTodo(@PathVariable Long id){
+        return toDoService.deleteTodo(id);
+    }
+
+    @PutMapping("/todo/{id}")
+    public ResponseEntity<Todo> updateSelectedTodo(@PathVariable("id") long id,@RequestBody Todo todo){
+        ResponseEntity<Todo> updatedTodo=toDoService.updateTodo(id,todo);
+        return updatedTodo;
+    }
+    @GetMapping("/todo/done")
+    public ResponseEntity<List<Todo>> findByDone(){
+        return toDoService.findDoneTodos();
     }
 
 }

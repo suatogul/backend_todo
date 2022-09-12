@@ -2,30 +2,66 @@ package com.suatogul.resttodoreact.service;
 
 import com.suatogul.resttodoreact.data.entity.Todo;
 import com.suatogul.resttodoreact.data.repository.ITodoRepository;
-import com.suatogul.resttodoreact.todo.IToDoService;
-import com.suatogul.resttodoreact.todo.ToDo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class ToDoService {
-
     @Autowired
     ITodoRepository todoRepository;
 
-//    private IToDoService todoService;
-
+    public List<Todo> getAllTodos(){
+        List<Todo> todos;
+        todos=todoRepository.findAll();
+        return todos;
+    }
     public Todo createTodo(Todo todo){
     Todo _todo=todoRepository.save(new Todo(todo.getTodoText(),false));
         return _todo;
     }
 
+    public ResponseEntity<Todo> deleteTodo(Long id){
+//        Why do I need to write Todo inside the brackets ResponseEntity<Todo> as long as I am not returning an object
+        try{
+                todoRepository.deleteById(id);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
+        }
 
+        public ResponseEntity<Todo> updateTodo(Long id, Todo todo ){
+            Optional<Todo> updateTodo=todoRepository.findById(id);
+            if (updateTodo.isPresent()){
+                Todo _todo=updateTodo.get();
+                _todo.setTodoText(todo.getTodoText());
+                _todo.setDone(todo.isDone());
+                return new ResponseEntity<>(todoRepository.save(_todo),HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
+        public ResponseEntity<List<Todo>> findDoneTodos(){
+        try{
+            List<Todo> doneTodos=todoRepository.findByDone(true);
+            if (doneTodos.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }else {
+                return new ResponseEntity<>(doneTodos,HttpStatus.OK);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 //======================
 //    ArrayList<ToDo> todoList=new ArrayList<ToDo>();
