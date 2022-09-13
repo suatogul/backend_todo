@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
@@ -30,6 +32,17 @@ public class ToDoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/todo/{id}")
+    public ResponseEntity<Todo> getTodoById(@PathVariable("id") long id){
+        Optional<Todo> getTodo=toDoService.getByIdTodo(id);
+        if(getTodo.isPresent()) {
+            return new ResponseEntity<>(getTodo.get(),HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping(value = "/todo")
     public ResponseEntity<Todo> createTodo(@RequestBody Todo todo){
         try{
@@ -43,6 +56,11 @@ public class ToDoController {
     @DeleteMapping(value = "/todo/{id}")
     public ResponseEntity<Todo>  deleteTodo(@PathVariable Long id){
         return toDoService.deleteTodo(id);
+    }
+
+    @DeleteMapping(value = "/todo")
+    public ResponseEntity<Todo> deleteAllTodo(){
+        return toDoService.deleteAllTodos();
     }
 
     @PutMapping("/todo/{id}")

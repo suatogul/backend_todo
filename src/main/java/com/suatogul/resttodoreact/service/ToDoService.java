@@ -22,6 +22,12 @@ public class ToDoService {
         todos=todoRepository.findAll();
         return todos;
     }
+
+    public Optional<Todo> getByIdTodo(Long id){
+//        why the "L" letter is capitalized in the service but it is lowercase in Controller
+        Optional<Todo> getTodo=todoRepository.findById(id);
+        return  getTodo;
+    }
     public Todo createTodo(Todo todo){
     Todo _todo=todoRepository.save(new Todo(todo.getTodoText(),false));
         return _todo;
@@ -30,14 +36,21 @@ public class ToDoService {
     public ResponseEntity<Todo> deleteTodo(Long id){
 //        Why do I need to write Todo inside the brackets ResponseEntity<Todo> as long as I am not returning an object
         try{
-                todoRepository.deleteById(id);
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            todoRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
         }
-
+    public ResponseEntity<Todo> deleteAllTodos(){
+        try {
+            todoRepository.deleteAll();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+}
         public ResponseEntity<Todo> updateTodo(Long id, Todo todo ){
             Optional<Todo> updateTodo=todoRepository.findById(id);
             if (updateTodo.isPresent()){
