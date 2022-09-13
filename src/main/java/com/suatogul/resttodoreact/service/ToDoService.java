@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +22,7 @@ public class ToDoService {
         return todos;
     }
 
-    public Optional<Todo> getByIdTodo(Long id){
+    public Optional<Todo> getByIdTodo(long id){
 //        why the "L" letter is capitalized in the service but it is lowercase in Controller
         Optional<Todo> getTodo=todoRepository.findById(id);
         return  getTodo;
@@ -51,7 +50,7 @@ public class ToDoService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 }
-        public ResponseEntity<Todo> updateTodo(Long id, Todo todo ){
+        public ResponseEntity<Todo> updateTodo(long id, Todo todo ){
             Optional<Todo> updateTodo=todoRepository.findById(id);
             if (updateTodo.isPresent()){
                 Todo _todo=updateTodo.get();
