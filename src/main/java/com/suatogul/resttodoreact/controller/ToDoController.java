@@ -2,7 +2,6 @@ package com.suatogul.resttodoreact.controller;
 
 import com.suatogul.resttodoreact.data.entity.Todo;
 import com.suatogul.resttodoreact.service.ToDoService;
-import com.suatogul.resttodoreact.todo.ToDo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
